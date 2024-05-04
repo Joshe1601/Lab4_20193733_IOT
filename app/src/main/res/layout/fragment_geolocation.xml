@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GeolocationFragment"
+    android:background="@color/sky_blue">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20sp"
+            android:textSize="20sp"
+            android:text="Buscar Geolocalización"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20sp">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="Ciudad"
+                android:inputType="numberDecimal"
+                android:background="@drawable/shape_btn_navigation"
+                android:padding="10sp"
+                android:textColorHint="@color/light_gray"
+                android:textSize="16sp"
+                android:id="@+id/etCity"
+                android:layout_marginEnd="10dp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_button"
+                android:text="Buscar"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:id="@+id/btnSearch"/>
+
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvGeolocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:padding="10dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+
+</FrameLayout>

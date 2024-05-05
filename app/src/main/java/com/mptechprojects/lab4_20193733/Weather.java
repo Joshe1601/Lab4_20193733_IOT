@@ -58,6 +58,16 @@ public class Weather {
     private Main main;
     private String name;
 
+    private String windDirection;
+
+    public String getWindDirection() {
+        return windDirection;
+    }
+
+    public void setWindDirection(String windDirection) {
+        this.windDirection = windDirection;
+    }
+
     public Coord getCoord() { return coord; }
     public void setCoord(Coord coord) { this.coord = coord; }
     public List<WeatherCondition> getWeather() { return weather; }

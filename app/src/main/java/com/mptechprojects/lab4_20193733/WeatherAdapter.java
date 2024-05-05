@@ -48,6 +48,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
         TextView textViewLon = holder.itemView.findViewById(R.id.tvMaxTemp);
         textViewLon.setText(MessageFormat.format("{0}K", w.getMain().getTemp_min().toString()));
 
+        TextView textViewWind = holder.itemView.findViewById(R.id.tvWind);
+        textViewWind.setText(MessageFormat.format("{0}", w.getWindDirection()));
+
     }
 
     @Override

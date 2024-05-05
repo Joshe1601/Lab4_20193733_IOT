@@ -1,5 +1,9 @@
 package com.mptechprojects.lab4_20193733;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,7 +30,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class WeatherFragment extends Fragment {
+public class WeatherFragment extends Fragment implements SensorEventListener{
 
     private WeatherViewModel weatherViewModel;
     private FragmentWeatherBinding binding;
@@ -34,7 +38,7 @@ public class WeatherFragment extends Fragment {
     private List<Weather> finalListWeather;
     private AppService appService;
 
-    private AppActivity appActivity;
+    private String windDirection = "Desconocido";
 
 
     @Override
@@ -92,8 +96,10 @@ public class WeatherFragment extends Fragment {
             public void onResponse(@NonNull Call<Weather> call, @NonNull Response<Weather> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Weather weather = response.body();
+                    weather.setWindDirection(windDirection);
 
                     finalListWeather.add(0, weather);
+                    Log.d("WeatherFragment", "onResponse: " + finalListWeather.size());
                     weatherViewModel.setWeathers(finalListWeather);
                 } else {
                     Toast.makeText(getContext(), "No se encontraron ciudades", Toast.LENGTH_LONG).show();
@@ -122,5 +128,60 @@ public class WeatherFragment extends Fragment {
             AppActivity appActivity = (AppActivity) requireActivity();
             appActivity.setMenuEnabled(enabled);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SensorManager mSensorManager = ((AppActivity) requireActivity()).getSensorManager();
+        if (mSensorManager != null) {
+            Sensor mMagnetic = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+            mSensorManager.registerListener(this, mMagnetic, SensorManager.SENSOR_DELAY_UI);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        SensorManager mSensorManager = ((AppActivity) requireActivity()).getSensorManager();
+        if (mSensorManager != null) {
+            mSensorManager.unregisterListener(this);
+        }
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if(event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+
+            if (x > 0 && y == 0){
+                windDirection = "Norte";
+            } else if (x > 0 && y > 0) {
+                windDirection = "Noreste";
+            } else if (x == 0 && y > 0) {
+                windDirection = "Este";
+            } else if (x < 0 && y > 0) {
+                windDirection = "Sureste";
+            } else if (x < 0 && y == 0) {
+                windDirection = "Sur";
+            } else if (x < 0 && y < 0) {
+                windDirection = "Suroeste";
+            } else if (x == 0 && y < 0) {
+                windDirection = "Oeste";
+            } else if (x > 0 && y < 0) {
+                windDirection = "Noroeste";
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }

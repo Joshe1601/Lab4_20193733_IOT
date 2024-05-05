@@ -135,8 +135,8 @@ public class GeolocationFragment extends Fragment implements SensorEventListener
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
 
         builder.setTitle("Agitación detectada");
-        builder.setMessage("");
-        builder.setPositiveButton("Aceptar", (dialog, which) -> {
+        builder.setMessage("¿Desea deshacer acción?");
+        builder.setPositiveButton("Deshacer", (dialog, which) -> {
             dialogShow = false;
             finalListGeolocation.remove(0);
             geolocationViewModel.setGeolocations(finalListGeolocation);
@@ -182,7 +182,9 @@ public class GeolocationFragment extends Fragment implements SensorEventListener
             float y = event.values[1];
             float z = event.values[2];
 
-            float acceleration = (float) Math.sqrt(x*x + y*y + z*z);
+
+            //No consideramos el eje Z porque así se especificó en la hoja del laboratorio
+            float acceleration = (float) Math.sqrt(x*x + y*y);
             if(acceleration > 15) {
                 showDialog(requireView());
             }

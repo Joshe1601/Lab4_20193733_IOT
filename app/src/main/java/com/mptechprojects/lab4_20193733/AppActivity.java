@@ -1,6 +1,7 @@
 package com.mptechprojects.lab4_20193733;
 
 import android.os.Bundle;
+import android.view.Menu;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.mptechprojects.lab4_20193733.databinding.ActivityAppBinding;
 
 import retrofit2.Retrofit;
@@ -35,5 +38,10 @@ public class AppActivity extends AppCompatActivity {
     }
 
 
-
+    public void setMenuEnabled(boolean enabled) {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+        Menu menu = bottomNavigationView.getMenu();
+        menu.findItem(R.id.btnGeolocation).setEnabled(enabled);
+        menu.findItem(R.id.btnWeather).setEnabled(enabled);
+    }
 }

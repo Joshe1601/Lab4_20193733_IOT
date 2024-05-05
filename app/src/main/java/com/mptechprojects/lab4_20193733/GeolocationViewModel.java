@@ -11,15 +11,11 @@ public class GeolocationViewModel extends ViewModel {
 
     private final MutableLiveData<List<Geolocation>> geolocations = new MutableLiveData<>(new ArrayList<>());
 
+
     public LiveData<List<Geolocation>> getGeolocations() {
         return geolocations;
     }
-
-    public void addGeolocation(Geolocation geolocation) {
-        List<Geolocation> currentList = geolocations.getValue();
-        if (currentList != null) {
-            currentList.add(0, geolocation);
-            geolocations.setValue(currentList);
-        }
+    public void setGeolocations(List<Geolocation> locations) {
+        geolocations.setValue(locations);
     }
 }

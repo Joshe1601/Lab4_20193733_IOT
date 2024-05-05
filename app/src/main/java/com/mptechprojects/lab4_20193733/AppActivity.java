@@ -1,7 +1,14 @@
 package com.mptechprojects.lab4_20193733;
 
+import android.content.Context;
+import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,19 +22,23 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 import com.mptechprojects.lab4_20193733.databinding.ActivityAppBinding;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class AppActivity extends AppCompatActivity {
+public class AppActivity extends AppCompatActivity{
 
     ActivityAppBinding binding;
+    private SensorManager mSensorManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         binding = ActivityAppBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -44,4 +55,10 @@ public class AppActivity extends AppCompatActivity {
         menu.findItem(R.id.btnGeolocation).setEnabled(enabled);
         menu.findItem(R.id.btnWeather).setEnabled(enabled);
     }
+
+    public SensorManager getSensorManager() {
+        return mSensorManager;
+    }
+
+
 }
